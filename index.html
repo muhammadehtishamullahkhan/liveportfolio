@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Muhammad Ehtisham Ullah Khan | Mobile App Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+:root {
+  --bg: #050810;
+  --bg2: #080d1a;
+  --surface: #0d1526;
+  --surface2: #111d35;
+  --accent: #4f8fff;
+  --accent2: #7c5cfc;
+  --accent3: #00e5c0;
+  --text: #e8edf5;
+  --text2: #8a9ab5;
+  --border: rgba(79,143,255,0.15);
+  --glow: rgba(79,143,255,0.25);
+  --glow2: rgba(124,92,252,0.2);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* CUSTOM CURSOR */
+.cursor{
+  width:10px;height:10px;
+  background:var(--accent);
+  border-radius:50%;
+  position:fixed;top:0;left:0;
+  pointer-events:none;z-index:9999;
+  transition:transform 0.1s;
+  mix-blend-mode:screen;
+}
+.cursor-ring{
+  width:36px;height:36px;
+  border:1.5px solid rgba(79,143,255,0.5);
+  border-radius:50%;
+  position:fixed;top:0;left:0;
+  pointer-events:none;z-index:9998;
+  transition:all 0.15s ease;
+}
+
+/* NOISE OVERLAY */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.4;
+}
+
+/* ANIMATED BG BLOBS */
+.bg-orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.orb{
+  position:absolute;border-radius:50%;filter:blur(80px);opacity:0.12;
+  animation:orbFloat 20s ease-in-out infinite;
+}
+.orb1{width:500px;height:500px;background:var(--accent2);top:-100px;right:-100px;animation-delay:0s;}
+.orb2{width:400px;height:400px;background:var(--accent);bottom:10%;left:-100px;animation-delay:-7s;}
+.orb3{width:300px;height:300px;background:var(--accent3);top:50%;right:20%;animation-delay:-14s;}
+@keyframes orbFloat{
+  0%,100%{transform:translate(0,0) scale(1);}
+  33%{transform:translate(30px,-40px) scale(1.05);}
+  66%{transform:translate(-20px,20px) scale(0.95);}
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:1.2rem 4rem;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(5,8,16,0.7);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:all 0.3s;
+}
+.nav-logo{
+  font-family:'Syne',sans-serif;
+  font-weight:800;font-size:1.4rem;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:-0.02em;
+}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{
+  color:var(--text2);font-size:0.9rem;font-weight:500;
+  text-decoration:none;letter-spacing:0.03em;
+  transition:color 0.3s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;width:0;height:1.5px;
+  background:var(--accent);transition:width 0.3s;
+}
+.nav-links a:hover{color:var(--accent);}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;padding:0.55rem 1.4rem;border-radius:50px;
+  text-decoration:none;font-size:0.88rem;font-weight:600;
+  transition:all 0.3s;box-shadow:0 0 20px var(--glow);
+}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 0 35px var(--glow);}
+.menu-btn{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+.menu-btn span{width:24px;height:2px;background:var(--text);transition:0.3s;}
+
+/* SECTIONS WRAPPER */
+section{position:relative;z-index:1;}
+
+/* HERO */
+#hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  padding:0 4rem;
+  overflow:hidden;
+}
+.hero-inner{
+  max-width:1200px;margin:0 auto;width:100%;
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;
+  padding-top:6rem;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:rgba(79,143,255,0.1);border:1px solid var(--border);
+  border-radius:50px;padding:0.4rem 1rem;
+  font-size:0.8rem;color:var(--accent);font-weight:500;
+  margin-bottom:1.5rem;
+  animation:fadeInUp 0.8s 0.2s both;
+}
+.hero-tag span{
+  width:6px;height:6px;background:var(--accent3);border-radius:50%;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.3);}}
+.hero-name{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2.5rem,5vw,4.2rem);
+  font-weight:800;line-height:1.05;
+  letter-spacing:-0.03em;
+  animation:fadeInUp 0.8s 0.3s both;
+}
+.hero-name .gradient{
+  background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 50%,var(--accent3) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-size:200%;
+  animation:gradientShift 4s ease infinite;
+}
+@keyframes gradientShift{0%,100%{background-position:0%;}50%{background-position:100%;}}
+.hero-role{
+  font-size:1.15rem;color:var(--text2);margin:1rem 0 1.5rem;
+  font-weight:300;letter-spacing:0.01em;
+  animation:fadeInUp 0.8s 0.4s both;
+}
+.hero-role strong{color:var(--accent3);font-weight:500;}
+.hero-desc{
+  color:var(--text2);line-height:1.8;font-size:0.97rem;
+  max-width:480px;
+  animation:fadeInUp 0.8s 0.5s both;
+}
+.hero-btns{
+  display:flex;gap:1rem;margin-top:2.5rem;flex-wrap:wrap;
+  animation:fadeInUp 0.8s 0.6s both;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;padding:0.8rem 2rem;border-radius:50px;
+  text-decoration:none;font-weight:600;font-size:0.95rem;
+  box-shadow:0 0 30px var(--glow);transition:all 0.3s;
+  display:inline-flex;align-items:center;gap:0.5rem;
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 0 50px var(--glow);}
+.btn-outline{
+  border:1px solid var(--border);color:var(--text);
+  padding:0.8rem 2rem;border-radius:50px;
+  text-decoration:none;font-weight:500;font-size:0.95rem;
+  transition:all 0.3s;display:inline-flex;align-items:center;gap:0.5rem;
+  backdrop-filter:blur(10px);
+}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px);}
+.hero-socials{
+  display:flex;gap:1rem;margin-top:2rem;
+  animation:fadeInUp 0.8s 0.7s both;
+}
+.social-icon{
+  width:40px;height:40px;border-radius:10px;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text2);text-decoration:none;font-size:1rem;
+  transition:all 0.3s;backdrop-filter:blur(10px);
+}
+.social-icon:hover{color:var(--accent);border-color:var(--accent);transform:translateY(-3px);box-shadow:0 0 20px var(--glow);}
+
+/* HERO VISUAL */
+.hero-visual{
+  display:flex;justify-content:center;align-items:center;
+  position:relative;
+  animation:fadeInRight 1s 0.4s both;
+}
+.hero-avatar-wrap{
+  position:relative;width:100%;max-width:500px;height:500px;
+}
+.avatar-bg{
+  position:absolute;inset:0;border-radius:40% 60% 55% 45% / 45% 40% 60% 55%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3));
+  animation:morphBlob 8s ease-in-out infinite;
+  opacity:0.15;
+}
+@keyframes morphBlob{
+  0%,100%{border-radius:40% 60% 55% 45% / 45% 40% 60% 55%;}
+  25%{border-radius:55% 45% 40% 60% / 60% 55% 45% 40%;}
+  50%{border-radius:45% 55% 60% 40% / 40% 60% 55% 45%;}
+  75%{border-radius:60% 40% 45% 55% / 55% 45% 40% 60%;}
+}
+.avatar-ring{
+  position:absolute;inset:-15px;border-radius:50%;
+  border:1px solid rgba(79,143,255,0.3);
+  animation:spin 20s linear infinite;
+}
+.avatar-ring::before{
+  content:'';position:absolute;top:10px;left:50%;
+  width:8px;height:8px;background:var(--accent);
+  border-radius:50%;transform:translateX(-50%);
+  box-shadow:0 0 15px var(--accent);
+}
+.avatar-ring2{
+  position:absolute;inset:-35px;border-radius:50%;
+  border:1px dashed rgba(124,92,252,0.2);
+  animation:spin 30s linear infinite reverse;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+.avatar-placeholder{
+  position:absolute;inset:20px;border-radius:30% 70% 60% 40% / 40% 50% 50% 60%;
+  background:linear-gradient(135deg,var(--surface2),var(--surface));
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;animation:morphBlob 10s ease-in-out infinite 2s;
+}
+.avatar-placeholder img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.avatar-letters{
+  font-family:'Syne',sans-serif;
+  font-size:4rem;font-weight:800;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  width:100%;
+  height:100%;
+}
+/* floating tech chips */
+.tech-chip{
+  position:absolute;
+  background:rgba(13,21,38,0.9);
+  border:1px solid var(--border);
+  border-radius:50px;
+  padding:0.4rem 0.9rem;
+  font-size:0.75rem;font-weight:600;color:var(--text2);
+  display:flex;align-items:center;gap:0.4rem;
+  backdrop-filter:blur(10px);
+  animation:chipFloat 4s ease-in-out infinite;
+  white-space:nowrap;
+}
+.tech-chip i{color:var(--accent);}
+.chip1{top:0;left:-30px;animation-delay:0s;}
+.chip2{bottom:20px;left:-40px;animation-delay:-1.5s;}
+.chip3{top:30px;right:-40px;animation-delay:-3s;}
+.chip4{bottom:10px;right:-20px;animation-delay:-0.8s;}
+@keyframes chipFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+/* scroll indicator */
+.scroll-indicator{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:0.5rem;
+  color:var(--text2);font-size:0.75rem;letter-spacing:0.1em;
+  text-transform:uppercase;animation:fadeIn 1s 1.5s both;
+  z-index:5;
+}
+.scroll-indicator .mouse{
+  width:22px;height:36px;border:2px solid var(--border);
+  border-radius:50px;display:flex;justify-content:center;padding-top:6px;
+}
+.scroll-indicator .wheel{
+  width:3px;height:8px;background:var(--accent);border-radius:50px;
+  animation:scroll 2s ease-in-out infinite;
+}
+@keyframes scroll{0%{opacity:1;transform:translateY(0);}100%{opacity:0;transform:translateY(10px);}}
+
+/* STATS BAR */
+.stats-bar{
+  background:var(--surface);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:2rem 4rem;
+}
+.stats-inner{
+  max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:2rem;
+}
+.stat-item{text-align:center;}
+.stat-num{
+  font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.stat-label{font-size:0.82rem;color:var(--text2);margin-top:0.2rem;letter-spacing:0.03em;}
+
+/* SECTION COMMON */
+.section{padding:6rem 4rem;}
+.section-inner{max-width:1200px;margin:0 auto;}
+.section-tag{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:rgba(79,143,255,0.08);border:1px solid var(--border);
+  border-radius:50px;padding:0.35rem 1rem;
+  font-size:0.78rem;color:var(--accent);font-weight:600;
+  letter-spacing:0.08em;text-transform:uppercase;
+  margin-bottom:1rem;
+}
+.section-tag::before{content:'';width:5px;height:5px;background:var(--accent);border-radius:50%;}
+.section-title{
+  font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);
+  font-weight:800;letter-spacing:-0.02em;margin-bottom:1rem;
+}
+.section-title span{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.section-sub{color:var(--text2);font-size:1rem;line-height:1.8;max-width:600px;}
+
+/* ABOUT */
+#about .about-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;margin-top:3rem;
+}
+.about-text p{color:var(--text2);line-height:1.9;font-size:0.97rem;margin-bottom:1rem;}
+.about-expertise{margin-top:2rem;}
+.about-expertise h4{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:1rem;color:var(--text);}
+.expertise-list{list-style:none;display:flex;flex-direction:column;gap:0.6rem;}
+.expertise-list li{
+  display:flex;align-items:center;gap:0.6rem;
+  color:var(--text2);font-size:0.9rem;
+}
+.expertise-list li::before{
+  content:'';width:5px;height:5px;background:var(--accent3);border-radius:50%;flex-shrink:0;
+}
+.about-info-cards{display:flex;flex-direction:column;gap:1.2rem;}
+.info-card{
+  background:var(--surface);
+  border:1px solid var(--border);border-radius:16px;
+  padding:1.4rem 1.6rem;
+  transition:all 0.3s;
+}
+.info-card:hover{border-color:rgba(79,143,255,0.4);transform:translateX(6px);}
+.info-card-label{font-size:0.75rem;color:var(--text2);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.4rem;}
+.info-card-value{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;}
+.info-card-value a{color:var(--accent);text-decoration:none;}
+.info-card-value a:hover{text-decoration:underline;}
+
+/* SKILLS */
+#skills{background:var(--bg2);}
+.skills-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:1.5rem;margin-top:3rem;
+}
+.skill-card{
+  background:var(--surface);
+  border:1px solid var(--border);border-radius:20px;
+  padding:1.8rem;
+  transition:all 0.35s;
+  position:relative;overflow:hidden;
+}
+.skill-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  opacity:0;transition:opacity 0.35s;
+}
+.skill-card:hover{transform:translateY(-6px);border-color:rgba(79,143,255,0.4);box-shadow:0 20px 60px rgba(0,0,0,0.4);}
+.skill-card:hover::before{opacity:0.05;}
+.skill-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:rgba(79,143,255,0.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;margin-bottom:1rem;
+  position:relative;z-index:1;
+}
+.skill-name{
+  font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;
+  margin-bottom:0.4rem;position:relative;z-index:1;
+}
+.skill-desc{color:var(--text2);font-size:0.84rem;line-height:1.6;position:relative;z-index:1;}
+.skill-bar-wrap{margin-top:1rem;position:relative;z-index:1;}
+.skill-bar-bg{height:4px;background:rgba(255,255,255,0.08);border-radius:50px;overflow:hidden;}
+.skill-bar-fill{
+  height:100%;border-radius:50px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  width:0%;transition:width 1.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* LANGUAGES */
+.langs-grid{
+  display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem;
+}
+.lang-badge{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:0.7rem 1.3rem;
+  display:flex;align-items:center;gap:0.6rem;
+  font-size:0.88rem;font-weight:500;
+  transition:all 0.3s;
+}
+.lang-badge:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px);}
+.lang-badge i{font-size:1.1rem;}
+
+/* PROJECTS */
+#projects{background:var(--bg);}
+.projects-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+  gap:1.8rem;margin-top:3rem;
+}
+.project-card{
+  background:var(--surface);
+  border:1px solid var(--border);border-radius:24px;
+  overflow:hidden;transition:all 0.35s;
+  position:relative;
+}
+.project-card:hover{transform:translateY(-8px);box-shadow:0 30px 80px rgba(0,0,0,0.5);border-color:rgba(79,143,255,0.3);}
+.project-img{
+  height:180px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:3.5rem;
+  position:relative;overflow:hidden;
+}
+.project-img.c1{background:linear-gradient(135deg,#1a1040,#2d1b6e);}
+.project-img.c2{background:linear-gradient(135deg,#001a2e,#003d6b);}
+.project-img.c3{background:linear-gradient(135deg,#0a2218,#0d4a33);}
+.project-img::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 50%,var(--surface));
+}
+.project-body{padding:1.5rem;}
+.project-tags{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.8rem;}
+.project-tag{
+  font-size:0.7rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;
+  padding:0.25rem 0.7rem;border-radius:50px;
+}
+.pt-flutter{background:rgba(79,195,247,0.1);color:#4fc3f7;}
+.pt-rn{background:rgba(97,218,251,0.1);color:#61dafb;}
+.pt-firebase{background:rgba(255,160,0,0.1);color:#ffa000;}
+.pt-maps{background:rgba(0,229,192,0.1);color:var(--accent3);}
+.project-name{
+  font-family:'Syne',sans-serif;font-weight:700;font-size:1.15rem;
+  margin-bottom:0.5rem;
+}
+.project-desc{color:var(--text2);font-size:0.87rem;line-height:1.7;}
+.project-footer{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 1.5rem;
+  border-top:1px solid var(--border);
+}
+.project-status{
+  font-size:0.78rem;color:var(--text2);
+  display:flex;align-items:center;gap:0.4rem;
+}
+.project-status .dot{width:6px;height:6px;border-radius:50%;background:#ffa500;}
+.project-status .dot.live{background:#00e676;}
+.project-link{
+  color:var(--accent);font-size:0.83rem;font-weight:600;
+  text-decoration:none;display:flex;align-items:center;gap:0.3rem;
+  transition:gap 0.3s;
+}
+.project-link:hover{gap:0.6rem;}
+
+/* EDUCATION */
+#education{background:var(--bg2);}
+.timeline{position:relative;margin-top:3rem;padding-left:2rem;}
+.timeline::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:2px;background:linear-gradient(to bottom,var(--accent),var(--accent2),transparent);
+  border-radius:2px;
+}
+.timeline-item{
+  position:relative;margin-bottom:2.5rem;
+  padding:1.8rem 2rem;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:20px;transition:all 0.3s;
+}
+.timeline-item:hover{border-color:rgba(79,143,255,0.4);transform:translateX(6px);}
+.timeline-item::before{
+  content:'';position:absolute;left:-2.65rem;top:1.8rem;
+  width:12px;height:12px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border:2px solid var(--bg);
+  box-shadow:0 0 15px var(--glow);
+}
+.tl-top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;}
+.tl-degree{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;}
+.tl-year{
+  font-size:0.78rem;color:var(--accent);font-weight:600;
+  background:rgba(79,143,255,0.1);padding:0.3rem 0.8rem;border-radius:50px;
+  white-space:nowrap;
+}
+.tl-institution{color:var(--text2);font-size:0.9rem;margin-top:0.3rem;}
+.tl-grade{
+  margin-top:0.8rem;font-size:0.85rem;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.tl-grade strong{
+  background:linear-gradient(135deg,var(--accent3),var(--accent));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  font-family:'Syne',sans-serif;font-size:1rem;
+}
+.tl-subjects{color:var(--text2);font-size:0.82rem;margin-top:0.5rem;line-height:1.7;}
+
+/* CONTACT */
+#contact{background:var(--bg);}
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;
+  margin-top:3rem;align-items:start;
+}
+.contact-info{display:flex;flex-direction:column;gap:1.2rem;}
+.contact-item{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:1.4rem 1.6rem;
+  display:flex;align-items:center;gap:1.2rem;
+  transition:all 0.3s;text-decoration:none;color:inherit;
+}
+.contact-item:hover{border-color:rgba(79,143,255,0.4);transform:translateX(6px);box-shadow:0 10px 40px rgba(0,0,0,0.3);}
+.contact-item-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:rgba(79,143,255,0.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;color:var(--accent);flex-shrink:0;
+}
+.contact-item-label{font-size:0.75rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.08em;}
+.contact-item-value{font-weight:500;font-size:0.92rem;margin-top:0.2rem;}
+.contact-form{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:2.5rem;}
+.form-group{margin-bottom:1.4rem;}
+.form-group label{display:block;font-size:0.82rem;color:var(--text2);margin-bottom:0.5rem;letter-spacing:0.03em;}
+.form-group input,
+.form-group textarea{
+  width:100%;background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);border-radius:12px;
+  padding:0.85rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;
+  font-size:0.93rem;outline:none;transition:border-color 0.3s;
+  resize:none;
+}
+.form-group input:focus,
+.form-group textarea:focus{border-color:var(--accent);}
+.form-group textarea{height:130px;}
+.btn-send{
+  width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;border:none;border-radius:50px;
+  padding:0.9rem;font-size:0.95rem;font-weight:600;
+  cursor:pointer;transition:all 0.3s;
+  display:flex;align-items:center;justify-content:center;gap:0.5rem;
+  box-shadow:0 0 30px var(--glow);
+}
+.btn-send:hover{transform:translateY(-3px);box-shadow:0 0 50px var(--glow);}
+
+/* FOOTER */
+footer{
+  background:var(--surface);
+  border-top:1px solid var(--border);
+  padding:2rem 4rem;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-copy{color:var(--text2);font-size:0.85rem;}
+.footer-copy strong{color:var(--accent);}
+.footer-links{display:flex;gap:1.5rem;}
+.footer-links a{color:var(--text2);font-size:0.85rem;text-decoration:none;transition:color 0.3s;}
+.footer-links a:hover{color:var(--accent);}
+
+/* CV & CERTIFICATES SECTION */
+.documents-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));
+  gap:2rem;margin-top:3rem;
+}
+.doc-card{
+  background:linear-gradient(135deg,rgba(79,143,255,0.08),rgba(124,92,252,0.08));
+  border:1px solid var(--border);border-radius:20px;
+  padding:2rem;transition:all 0.4s;
+  position:relative;overflow:hidden;
+}
+.doc-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(79,143,255,0.1),rgba(124,92,252,0.1));
+  opacity:0;transition:opacity 0.4s;z-index:0;
+}
+.doc-card:hover{
+  transform:translateY(-5px);
+  border-color:var(--accent);
+  box-shadow:0 20px 60px var(--glow);
+}
+.doc-card:hover::before{opacity:1;}
+.doc-card > *{position:relative;z-index:1;}
+.doc-card-header{
+  display:flex;gap:1.5rem;align-items:flex-start;margin-bottom:1.5rem;
+}
+.doc-icon{
+  width:60px;height:60px;border-radius:15px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;flex-shrink:0;
+  background:rgba(79,143,255,0.1);color:var(--accent);
+  border:1px solid var(--border);
+}
+.doc-icon.cert-icon{background:rgba(0,229,192,0.1);color:var(--accent3);}
+.doc-meta h3{
+  font-size:1.2rem;font-weight:600;margin-bottom:0.3rem;
+  font-family:'Syne',sans-serif;
+}
+.doc-meta p{color:var(--text2);font-size:0.85rem;}
+.doc-description{
+  color:var(--text2);line-height:1.6;font-size:0.95rem;
+  margin-bottom:1.5rem;
+}
+.doc-info-box{
+  background:rgba(79,143,255,0.05);border:1px solid var(--border);
+  border-radius:12px;padding:1rem;margin-bottom:1.5rem;
+  display:flex;flex-direction:column;gap:0.5rem;font-size:0.9rem;
+}
+.doc-info-box span{color:var(--text2);}
+.doc-info-box strong{color:var(--text);}
+.doc-actions{
+  display:flex;gap:1rem;flex-wrap:wrap;
+}
+.btn-doc-download,.btn-doc-preview{
+  flex:1;min-width:140px;
+  padding:0.7rem 1.2rem;border-radius:10px;
+  font-size:0.9rem;font-weight:500;
+  transition:all 0.3s;display:inline-flex;
+  align-items:center;justify-content:center;gap:0.5rem;
+  text-decoration:none;border:none;cursor:pointer;
+}
+.btn-doc-download{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;box-shadow:0 5px 20px var(--glow);
+}
+.btn-doc-download:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--glow);}
+.btn-doc-preview{
+  border:1px solid var(--border);color:var(--text);
+  background:rgba(79,143,255,0.05);
+}
+.btn-doc-preview:hover{
+  border-color:var(--accent);color:var(--accent);
+  background:rgba(79,143,255,0.1);
+}
+
+/* PDF MODAL */
+.pdf-modal{
+  display:none;position:fixed;inset:0;
+  background:rgba(5,8,16,0.95);z-index:1000;
+  backdrop-filter:blur(20px);align-items:center;
+  justify-content:center;padding:2rem;
+  overflow-y:auto;
+}
+.pdf-modal.open{display:flex;}
+.pdf-modal-content{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:20px;max-width:900px;width:100%;
+  padding:2rem;position:relative;max-height:90vh;
+  overflow-y:auto;
+}
+.modal-close{
+  position:absolute;top:1rem;right:1rem;
+  width:40px;height:40px;
+  background:rgba(79,143,255,0.1);border:1px solid var(--border);
+  border-radius:50%;color:var(--text);
+  font-size:1.5rem;cursor:pointer;
+  transition:all 0.3s;z-index:10;
+}
+.modal-close:hover{
+  background:var(--accent);color:#fff;
+  border-color:var(--accent);
+}
+.pdf-modal-content h3{
+  font-size:1.4rem;margin-bottom:1.5rem;
+  font-family:'Syne',sans-serif;font-weight:600;
+}
+.pdf-viewer{
+  width:100%;height:600px;border:1px solid var(--border);
+  border-radius:12px;overflow:hidden;background:rgba(0,0,0,0.2);
+}
+.pdf-viewer embed{width:100%;height:100%;}
+
+/* ANIMATIONS */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeInRight{from{opacity:0;transform:translateX(40px);}to{opacity:1;transform:translateX(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:0.1s;}
+.reveal-delay-2{transition-delay:0.2s;}
+.reveal-delay-3{transition-delay:0.3s;}
+.reveal-delay-4{transition-delay:0.4s;}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  nav{padding:1.2rem 2rem;}
+  .hero-inner{grid-template-columns:1fr;gap:3rem;text-align:center;}
+  .hero-desc{max-width:100%;}
+  .hero-btns,.hero-socials{justify-content:center;}
+  .hero-visual{display:none;}
+  #about .about-grid{grid-template-columns:1fr;}
+  .contact-grid{grid-template-columns:1fr;}
+  .section{padding:5rem 2rem;}
+  .stats-bar{padding:2rem;}
+  .stats-inner{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links,.nav-cta{display:none;}
+  .menu-btn{display:flex;}
+  .section{padding:4rem 1.5rem;}
+  .stats-inner{grid-template-columns:repeat(2,1fr);}
+  footer{padding:1.5rem;flex-direction:column;text-align:center;}
+  .projects-grid{grid-template-columns:1fr;}
+}
+
+/* MOBILE NAV */
+.mobile-nav{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(5,8,16,0.98);backdrop-filter:blur(20px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2.5rem;
+  transform:translateX(100%);transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.mobile-nav.open{transform:translateX(0);}
+.mobile-nav a{
+  font-family:'Syne',sans-serif;font-size:2rem;font-weight:700;
+  color:var(--text);text-decoration:none;transition:color 0.3s;
+}
+.mobile-nav a:hover{color:var(--accent);}
+.mobile-close{
+  position:absolute;top:1.5rem;right:1.5rem;
+  font-size:1.5rem;color:var(--text2);cursor:pointer;
+  transition:color 0.3s;background:none;border:none;
+}
+.mobile-close:hover{color:var(--accent);}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- BG ORBS -->
+<div class="bg-orbs">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">Ehtisham.</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#documents">Documents</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+  <div class="menu-btn" id="menuBtn">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-close" id="closeNav"><i class="fas fa-times"></i></button>
+  <a href="#about" onclick="closeMobileNav()">About</a>
+  <a href="#skills" onclick="closeMobileNav()">Skills</a>
+  <a href="#projects" onclick="closeMobileNav()">Projects</a>
+  <a href="#education" onclick="closeMobileNav()">Education</a>
+  <a href="#documents" onclick="closeMobileNav()">Documents</a>
+  <a href="#contact" onclick="closeMobileNav()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-tag"><span></span>Available for Freelance</div>
+      <h1 class="hero-name">
+        Muhammad<br>
+        <span class="gradient">Ehtisham</span><br>
+        Ullah Khan
+      </h1>
+      <p class="hero-role">Mobile &amp; Web Developer<br>
+        <strong>JavaScript, React &amp; React Native Specialist</strong>
+      </p>
+      <p class="hero-desc">
+        Motivated developer with strong proficiency in JavaScript, React, and React Native. Proven track record of delivering high-quality mobile applications and web frontend solutions with intuitive user interfaces and full-stack capabilities.
+      </p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn-primary"><i class="fas fa-rocket"></i> View My Work</a>
+        <a href="#contact" class="btn-outline"><i class="fas fa-envelope"></i> Get in Touch</a>
+      </div>
+      <div class="hero-socials">
+        <a href="https://www.linkedin.com/in/muhammad-ehtisham-ullah-6263a3344" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        <a href="mailto:mehtishamullahkhan@gmail.com" class="social-icon"><i class="fas fa-envelope"></i></a>
+        <a href="tel:+923029568802" class="social-icon"><i class="fas fa-phone"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-avatar-wrap">
+        <div class="avatar-bg"></div>
+        <div class="avatar-ring"></div>
+        <div class="avatar-ring2"></div>
+        <div class="avatar-placeholder">
+          <span class="avatar-letters"><img src="Gemini_Generated_Image_5vhdo35vhdo35vhd.png" alt=""></span>
+        </div>
+        <div class="tech-chip chip1"><i class="fab fa-react"></i> React Native</div>
+        <div class="tech-chip chip2"><i class="fas fa-mobile-alt"></i> React</div>
+        <div class="tech-chip chip3"><i class="fab fa-android"></i> Android</div>
+        <div class="tech-chip chip4"><i class="fab fa-apple"></i> Web</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="mouse"><div class="wheel"></div></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item reveal">
+      <div class="stat-num counter" data-target="2">0</div>
+      <div class="stat-label">Frameworks Mastered</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-1">
+      <div class="stat-num counter" data-target="4">0</div>
+      <div class="stat-label">Projects Delivered</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-2">
+      <div class="stat-num">3.3</div>
+      <div class="stat-label">CGPA / 4.0</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-3">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Client Satisfaction</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-tag">About Me</div>
+      <h2 class="section-title">Passionate Developer<br><span>Building the Future</span></h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>Hi, I'm Muhammad Ehtisham Ullah Khan, a motivated mobile and web developer based in Islamabad, Pakistan. I specialize in JavaScript, React, and React Native, delivering high-quality mobile applications and web frontend solutions.</p>
+        <p>With strong proficiency in building intuitive user interfaces and developing full-stack features, I have successfully completed multiple projects demonstrating expertise in mobile application architecture, responsive design, and cross-platform development.</p>
+        <p>I bring practical expertise from my academic background at the University of Mianwali, where I studied Computer Science with a focus on Mobile Application Development, Web Development, and Data Structures. I'm passionate about creating impactful digital solutions.</p>
+        <div class="about-expertise">
+          <h4>Core Expertise</h4>
+          <ul class="expertise-list">
+            <li>React Native for cross-platform mobile development</li>
+            <li>React and JavaScript for web development</li>
+            <li>HTML, CSS, and responsive design</li>
+            <li>Node.js backend integration</li>
+            <li>UI/UX Design Principles</li>
+          </ul>
+        </div>
+      </div>
+      <div class="about-info-cards reveal reveal-delay-2">
+        <div class="info-card">
+          <div class="info-card-label">Full Name</div>
+          <div class="info-card-value">Muhammad Ehtisham Ullah Khan</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Location</div>
+          <div class="info-card-value">Islamabad, Pakistan</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Field</div>
+          <div class="info-card-value">Mobile App Development</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Phone</div>
+          <div class="info-card-value"><a href="tel:+923029568802">+92 302 9568802</a></div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Email</div>
+          <div class="info-card-value"><a href="mailto:mehtishamullahkhan@gmail.com">mehtishamullahkhan@gmail.com</a></div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">LinkedIn</div>
+          <div class="info-card-value"><a href="https://www.linkedin.com/in/muhammad-ehtisham-ullah-6263a3344" target="_blank">muhammad-ehtisham-ullah</a></div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Availability</div>
+          <div class="info-card-value" style="color:var(--accent3)">✓ Open to Opportunities</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-tag">Skills</div>
+      <h2 class="section-title">Technical <span>Expertise</span></h2>
+      <p class="section-sub">Tools and technologies I work with professionally.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-icon">🌐</div>
+        <div class="skill-name">Web Frontend</div>
+        <div class="skill-desc">HTML, CSS, JavaScript</div>
+        <div class="skill-bar-wrap"><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="90%"></div></div></div>
+      </div>
+      <div class="skill-card reveal reveal-delay-1">
+        <div class="skill-icon">📱</div>
+        <div class="skill-name">Mobile Development</div>
+        <div class="skill-desc">React Native</div>
+        <div class="skill-bar-wrap"><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="88%"></div></div></div>
+      </div>
+      <div class="skill-card reveal reveal-delay-2">
+        <div class="skill-icon">⚛️</div>
+        <div class="skill-name">Frameworks &amp; Libraries</div>
+        <div class="skill-desc">React, React Native</div>
+        <div class="skill-bar-wrap"><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="85%"></div></div></div>
+      </div>
+      <div class="skill-card reveal reveal-delay-3">
+        <div class="skill-icon">🔧</div>
+        <div class="skill-name">Backend</div>
+        <div class="skill-desc">Node.js, Python (Foundational)</div>
+        <div class="skill-bar-wrap"><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="75%"></div></div></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">💻</div>
+        <div class="skill-name">Tools &amp; Technologies</div>
+        <div class="skill-desc">VS Code, Android Studio, WebStorm, IntelliJ IDEA</div>
+        <div class="skill-bar-wrap"><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="82%"></div></div></div>
+      </div>
+      <div class="skill-card reveal reveal-delay-1">
+        <div class="skill-icon">🎯</div>
+        <div class="skill-name">Soft Skills</div>
+        <div class="skill-desc">Problem Solving, Team Collaboration, UI/UX Design Principles</div>
+        <div class="skill-bar-wrap"><div class="skill-bar-bg"><div class="skill-bar-fill" data-width="88%"></div></div></div>
+      </div>
+    </div>
+
+    <!-- Languages -->
+    <div style="margin-top:3.5rem;" class="reveal">
+      <div class="section-tag">Languages &amp; Technologies</div>
+      <div class="langs-grid" style="margin-top:1.5rem;">
+        <div class="lang-badge"><i class="fab fa-js" style="color:#f7df1e;"></i> JavaScript</div>
+        <div class="lang-badge"><i class="fab fa-react" style="color:#61dafb;"></i> React</div>
+        <div class="lang-badge"><i class="fab fa-react" style="color:#61dafb;"></i> React Native</div>
+        <div class="lang-badge"><i class="fab fa-html5" style="color:#e34c26;"></i> HTML</div>
+        <div class="lang-badge"><i class="fab fa-css3" style="color:#563d7c;"></i> CSS</div>
+        <div class="lang-badge"><i class="fab fa-node" style="color:#68a063;"></i> Node.js</div>
+        <div class="lang-badge"><i class="fab fa-python" style="color:#3776ab;"></i> Python</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-tag">Portfolio</div>
+      <h2 class="section-title">Featured <span>Projects</span></h2>
+      <p class="section-sub">Real-world applications built with modern technologies. More projects coming soon.</p>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <div class="project-img c1">🌍</div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag pt-rn">React Native</span>
+            <span class="project-tag pt-firebase">Multi-Module</span>
+          </div>
+          <div class="project-name">BinBuzz – Smart Waste Management</div>
+          <div class="project-desc">Developed a comprehensive waste management system comprising three interconnected mobile applications: Driver App, Sweeper App, and Zonal Manager App with real-time data synchronization and role-based access control.</div>
+        </div>
+        <div class="project-footer">
+          <div class="project-status"><span class="dot live"></span> Final Year Project</div>
+          <a href="#" class="project-link">Details <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+      <div class="project-card reveal reveal-delay-1">
+        <div class="project-img c2">🎬</div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag pt-rn">React Native</span>
+            <span class="project-tag pt-maps">UI/UX</span>
+          </div>
+          <div class="project-name">Movie App</div>
+          <div class="project-desc">Developed a mobile application for browsing movies with detailed information, ratings, and user reviews. Implemented search and filter functionality with professional UI/UX interface design.</div>
+        </div>
+        <div class="project-footer">
+          <div class="project-status"><span class="dot live"></span> Completed</div>
+          <a href="#" class="project-link">Details <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+      <div class="project-card reveal reveal-delay-2">
+        <div class="project-img c3">🧮</div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag pt-rn">React Native</span>
+            <span class="project-tag pt-firebase">Node.js</span>
+          </div>
+          <div class="project-name">Calculator App</div>
+          <div class="project-desc">Built a mobile calculator application with advanced mathematical operations using React Native for frontend. Integrated Node.js backend for complex calculations and operation history tracking.</div>
+        </div>
+        <div class="project-footer">
+          <div class="project-status"><span class="dot live"></span> Completed</div>
+          <a href="#" class="project-link">Details <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-img c1">🛍️</div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag pt-rn">HTML/CSS</span>
+            <span class="project-tag pt-firebase">JavaScript</span>
+          </div>
+          <div class="project-name">Online Shopping System</div>
+          <div class="project-desc">Developed a fully functional e-commerce web application with product catalog, shopping cart, and checkout functionality. Built responsive shopping cart system and responsive frontend layout for desktop and mobile devices.</div>
+        </div>
+        <div class="project-footer">
+          <div class="project-status"><span class="dot live"></span> Semester Project</div>
+          <a href="#" class="project-link">Details <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem;" class="reveal">
+      <p style="color:var(--text2);font-size:0.9rem;">🚀 More projects will be added soon — stay tuned!</p>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-tag">Education</div>
+      <h2 class="section-title">Academic <span>Background</span></h2>
+      <p class="section-sub">A strong foundation in science and computer science fueling my development journey.</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="tl-top">
+          <div>
+            <div class="tl-degree">BS Computer Science</div>
+            <div class="tl-institution">University of Mianwali</div>
+          </div>
+          <div class="tl-year">Completed 2024</div>
+        </div>
+        <div class="tl-grade">CGPA: <strong>3.30 / 4.0</strong></div>
+        <div class="tl-subjects">Coursework: Object Oriented Programming (OOP), Mobile Application Development, Web Development, Data Structures and Algorithms (DSA), Database Management.</div>
+      </div>
+      <div class="timeline-item reveal reveal-delay-1">
+        <div class="tl-top">
+          <div>
+            <div class="tl-degree">Intermediate</div>
+            <div class="tl-institution">Abdul Razzaq College, MM Alam, Mianwali</div>
+          </div>
+          <div class="tl-year">Completed</div>
+        </div>
+        <div class="tl-grade">Grade: <strong>A1</strong> &nbsp;|&nbsp; <strong>902 / 1100</strong></div>
+      </div>
+      <div class="timeline-item reveal reveal-delay-2">
+        <div class="tl-top">
+          <div>
+            <div class="tl-degree">Matric</div>
+            <div class="tl-institution">Abdul Razzaq Fazaia College, MM Alam</div>
+          </div>
+          <div class="tl-year">Completed</div>
+        </div>
+        <div class="tl-grade">Grade: <strong>A1</strong> &nbsp;|&nbsp; <strong>920 / 1100</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CV & CERTIFICATIONS -->
+<section id="documents" class="section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-tag">Documents</div>
+      <h2 class="section-title">CV & <span>Certifications</span></h2>
+      <p class="section-sub">Download my professional resume and view my certifications.</p>
+    </div>
+    
+    <div class="documents-grid">
+      <!-- CV Card -->
+      <div class="doc-card reveal">
+        <div class="doc-card-header">
+          <div class="doc-icon cv-icon">
+            <i class="fas fa-file-pdf"></i>
+          </div>
+          <div class="doc-meta">
+            <h3>Resume / CV</h3>
+            <p>Comprehensive professional profile</p>
+          </div>
+        </div>
+        <div class="doc-description">
+          Complete resume highlighting education, projects, skills, and professional experience in mobile and web development.
+        </div>
+        <div class="doc-actions">
+          <a href="c:\Users\User\Downloads\portfolio\Muhammad_Ehtisham_Ullah_Khan_CV (1).pdf" download class="btn-doc-download">
+            <i class="fas fa-download"></i> Download CV
+          </a>
+          <button class="btn-doc-preview" onclick="openModal('cvModal')">
+            <i class="fas fa-eye"></i> Preview
+          </button>
+        </div>
+      </div>
+
+      <!-- Certificate Card -->
+      <div class="doc-card reveal reveal-delay-1">
+        <div class="doc-card-header">
+          <div class="doc-icon cert-icon">
+            <i class="fas fa-certificate"></i>
+          </div>
+          <div class="doc-meta">
+            <h3>Python Programming Course</h3>
+            <p>Completion Certificate</p>
+          </div>
+        </div>
+        <div class="doc-description">
+          Certificate of completion from Hadi E-Learning for the Python Programming Course. Successfully completed all coursework demonstrating proficiency in Python programming fundamentals.
+        </div>
+        <div class="doc-actions">
+          <a href="#" download class="btn-doc-download" style="opacity:0.6;cursor:not-allowed;">
+            <i class="fas fa-download"></i> Certificate Available
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PDF MODALS -->
+<div id="cvModal" class="pdf-modal">
+  <div class="pdf-modal-content">
+    <button class="modal-close" onclick="closeModal('cvModal')">&times;</button>
+    <h3>Resume / CV</h3>
+    <div class="pdf-viewer">
+      <embed src="Muhammad_Ehtisham_Ullah_Khan_CV (1).pdf" type="application/pdf" />
+    </div>
+  </div>
+</div>
+
+<div id="certModal" class="pdf-modal">
+  <div class="pdf-modal-content">
+    <button class="modal-close" onclick="closeModal('certModal')">&times;</button>
+    <h3>Python with AI Mastery Certificate</h3>
+    <div class="pdf-viewer">
+      <embed src="1776951678834.pdf" type="application/pdf" />
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-tag">Contact</div>
+      <h2 class="section-title">Let's <span>Work Together</span></h2>
+      <p class="section-sub">Have a project in mind? I'd love to hear about it. Let's build something amazing together.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <a href="tel:+923029568802" class="contact-item">
+          <div class="contact-item-icon"><i class="fas fa-phone"></i></div>
+          <div>
+            <div class="contact-item-label">Phone</div>
+            <div class="contact-item-value">+92 302 9568802</div>
+          </div>
+        </a>
+        <a href="mailto:mehtishamullahkhan@gmail.com" class="contact-item">
+          <div class="contact-item-icon"><i class="fas fa-envelope"></i></div>
+          <div>
+            <div class="contact-item-label">Email</div>
+            <div class="contact-item-value">mehtishamullahkhan@gmail.com</div>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/muhammad-ehtisham-ullah-6263a3344" target="_blank" class="contact-item">
+          <div class="contact-item-icon"><i class="fab fa-linkedin-in"></i></div>
+          <div>
+            <div class="contact-item-label">LinkedIn</div>
+            <div class="contact-item-value">muhammad-ehtisham-ullah</div>
+          </div>
+        </a>
+        <div class="contact-item">
+          <div class="contact-item-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div>
+            <div class="contact-item-label">Location</div>
+            <div class="contact-item-value">Islamabad, Pakistan</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon" style="background:rgba(0,229,192,0.1);color:var(--accent3);"><i class="fas fa-circle"></i></div>
+          <div>
+            <div class="contact-item-label">Status</div>
+            <div class="contact-item-value" style="color:var(--accent3);">Available for Freelance &amp; Full-time</div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal reveal-delay-2">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="John Doe"/>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="john@example.com"/>
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <input type="text" placeholder="Project Discussion"/>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell me about your project..."></textarea>
+        </div>
+        <button class="btn-send"><i class="fas fa-paper-plane"></i> Send Message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">© 2024 <strong>Muhammad Ehtisham Ullah Khan</strong> — All rights reserved.</div>
+  <div class="footer-links">
+    <a href="#hero">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+// CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX; my=e.clientY;
+  cursor.style.left=mx-5+'px'; cursor.style.top=my-5+'px';
+});
+function animRing(){
+  rx+=(mx-rx-18)*0.12; ry+=(my-ry-18)*0.12;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+document.querySelectorAll('a,button,.skill-card,.project-card,.contact-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.transform='scale(2)';ring.style.transform='scale(1.5)';ring.style.borderColor='rgba(79,143,255,0.8)';});
+  el.addEventListener('mouseleave',()=>{cursor.style.transform='scale(1)';ring.style.transform='scale(1)';ring.style.borderColor='rgba(79,143,255,0.5)';});
+});
+
+// NAV SCROLL
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  navbar.style.background=window.scrollY>50?'rgba(5,8,16,0.95)':'rgba(5,8,16,0.7)';
+});
+
+// MOBILE NAV
+document.getElementById('menuBtn').addEventListener('click',()=>{document.getElementById('mobileNav').classList.add('open');});
+document.getElementById('closeNav').addEventListener('click',()=>closeMobileNav());
+function closeMobileNav(){document.getElementById('mobileNav').classList.remove('open');}
+
+// REVEAL ON SCROLL
+const reveals=document.querySelectorAll('.reveal');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});
+},{threshold:0.1});
+reveals.forEach(el=>observer.observe(el));
+
+// SKILL BARS
+const barObserver=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const fill=e.target.querySelector('.skill-bar-fill');
+      if(fill){fill.style.width=fill.dataset.width;}
+    }
+  });
+},{threshold:0.3});
+document.querySelectorAll('.skill-card').forEach(c=>barObserver.observe(c));
+
+// COUNTER ANIMATION
+const counterObserver=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting&&!e.target.dataset.done){
+      e.target.dataset.done='1';
+      const target=parseInt(e.target.dataset.target);
+      let count=0;
+      const step=target/40;
+      const timer=setInterval(()=>{
+        count+=step;
+        if(count>=target){count=target;clearInterval(timer);}
+        e.target.textContent=Math.floor(count)+(target>=10?'+':'');
+      },40);
+    }
+  });
+},{threshold:0.5});
+document.querySelectorAll('.counter').forEach(el=>counterObserver.observe(el));
+
+// ACTIVE NAV LINK
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.id;});
+  navLinks.forEach(a=>{
+    a.style.color=a.getAttribute('href')==='#'+cur?'var(--accent)':'';
+  });
+});
+
+// PDF MODAL FUNCTIONS
+function openModal(modalId){
+  const modal=document.getElementById(modalId);
+  if(modal){modal.classList.add('open');}
+}
+function closeModal(modalId){
+  const modal=document.getElementById(modalId);
+  if(modal){modal.classList.remove('open');}
+}
+// Close modal when clicking outside content
+document.querySelectorAll('.pdf-modal').forEach(modal=>{
+  modal.addEventListener('click',e=>{
+    if(e.target===modal){closeModal(modal.id);}
+  });
+});
+</script>
+</body>
+</html>
